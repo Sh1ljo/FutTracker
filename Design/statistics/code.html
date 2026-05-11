@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Statistics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lexend:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#e8f0e9",
+                        "inverse-primary": "#4edea3",
+                        "on-secondary-fixed": "#002115",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#006c4b",
+                        "inverse-on-surface": "#ebf3eb",
+                        "on-tertiary-fixed-variant": "#005137",
+                        "tertiary-container": "#00b982",
+                        "on-error": "#ffffff",
+                        "secondary": "#1b6b4f",
+                        "on-tertiary-container": "#00422c",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#dde4dd",
+                        "on-surface-variant": "#3c4a42",
+                        "primary": "#006c49",
+                        "on-background": "#161d19",
+                        "surface-container-highest": "#dde4dd",
+                        "on-secondary-fixed-variant": "#00513a",
+                        "surface": "#f4fbf4",
+                        "outline": "#6c7a71",
+                        "on-secondary-container": "#247155",
+                        "primary-container": "#10b981",
+                        "secondary-fixed": "#a6f2cf",
+                        "surface-dim": "#d4dcd5",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f4fbf4",
+                        "on-primary-fixed-variant": "#005236",
+                        "surface-tint": "#006c49",
+                        "tertiary-fixed-dim": "#45dfa4",
+                        "inverse-surface": "#2b322d",
+                        "outline-variant": "#bbcabf",
+                        "secondary-container": "#a6f2cf",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#4edea3",
+                        "surface-container-high": "#e3eae3",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#eef6ee",
+                        "on-surface": "#161d19",
+                        "primary-fixed": "#6ffbbe",
+                        "on-primary-fixed": "#002113",
+                        "tertiary-fixed": "#68fcbf",
+                        "on-tertiary-fixed": "#002114",
+                        "background": "#f4fbf4",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#00422b",
+                        "secondary-fixed-dim": "#8bd6b4",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "base": "4px",
+                        "gutter": "16px",
+                        "sm": "8px",
+                        "container-margin": "20px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Lexend"],
+                        "body-lg": ["Inter"],
+                        "h1": ["Lexend"],
+                        "label-md": ["Inter"],
+                        "h3": ["Lexend"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "h3": ["20px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "letterSpacing": "0", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #f4fbf4; color: #161d19; }
+        .chart-line { stroke-dasharray: 1000; stroke-dashoffset: 0; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body-md text-on-surface pb-[80px]">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-background w-full top-0 sticky border-b border-outline-variant dark:border-outline z-40">
+<div class="flex justify-between items-center px-gutter py-sm w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-sm">
+<img alt="User Profile" class="w-10 h-10 rounded-full border border-outline-variant" data-alt="A close up portrait photo of a modern athlete with a determined expression, wearing a minimalist green and white training top, clean studio lighting, energetic and focused mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo3ryKu8pmfd4WMWKdu5EA1JGGG1WxSbDuaeJd657iBuFS9cInGEYzCWJj9p4p3ZY7vqtz7n2zbor_YKk6t9MtH9t47S55S4Xdw6uQnjCnLxg7-8Za0GIfL3H9ulrygcfJrHiyWYTKCAhP93MKccKRZ67EM0yoGWxO8X756pMVdLQ9QxZnE261mDyFPjhTURH_RKSxK59QuWigY-blZcdCLT2FRiw73LPnw1lFsQt2z_60yjzkgEcx5Mith7ztaVRS3DaKqq2mE8-d"/>
+<h1 class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed">Elite Trainer</h1>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-gutter py-lg space-y-xl">
+<!-- Header & Filter -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div>
+<h2 class="font-h1 text-h1 text-on-surface">Performance Stats</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-sm">Track your training volume and metrics over time.</p>
+</div>
+<div class="flex bg-surface-container-high rounded-lg p-1 w-full md:w-auto">
+<button class="flex-1 md:flex-none px-lg py-sm rounded-md font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors">Week</button>
+<button class="flex-1 md:flex-none px-lg py-sm rounded-md font-label-md text-label-md bg-primary-container text-on-primary shadow-sm transition-colors">Month</button>
+<button class="flex-1 md:flex-none px-lg py-sm rounded-md font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors">Year</button>
+</div>
+</div>
+<!-- Metric Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- Total Goals -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex items-center gap-md hover:border-primary-container transition-colors">
+<div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container text-2xl">sports_soccer</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Goals</p>
+<p class="font-h1 text-h1 text-on-surface">42</p>
+</div>
+</div>
+<!-- Avg Performance -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex items-center gap-md hover:border-primary-container transition-colors">
+<div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container text-2xl">trending_up</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Avg Performance</p>
+<div class="flex items-baseline gap-sm">
+<p class="font-h1 text-h1 text-on-surface">8.5</p>
+<p class="font-label-md text-label-md text-primary-container">/ 10</p>
+</div>
+</div>
+</div>
+<!-- Total Trainings -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex items-center gap-md hover:border-primary-container transition-colors">
+<div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container text-2xl">event_note</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Trainings</p>
+<div class="flex items-baseline gap-sm">
+<p class="font-h1 text-h1 text-on-surface">124</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">hrs</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Chart Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex justify-between items-center mb-lg">
+<h3 class="font-h3 text-h3 text-on-surface">Training Volume</h3>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">more_vert</span>
+</button>
+</div>
+<!-- SVG Chart Placeholder -->
+<div class="w-full h-[300px] relative">
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pt-4 pb-8 border-l border-b border-outline-variant">
+<div class="w-full border-t border-outline-variant/30 relative"><span class="absolute -left-8 -top-3 text-xs text-on-surface-variant">100</span></div>
+<div class="w-full border-t border-outline-variant/30 relative"><span class="absolute -left-6 -top-3 text-xs text-on-surface-variant">75</span></div>
+<div class="w-full border-t border-outline-variant/30 relative"><span class="absolute -left-6 -top-3 text-xs text-on-surface-variant">50</span></div>
+<div class="w-full border-t border-outline-variant/30 relative"><span class="absolute -left-6 -top-3 text-xs text-on-surface-variant">25</span></div>
+<div class="w-full relative"><span class="absolute -left-4 -top-3 text-xs text-on-surface-variant">0</span></div>
+</div>
+<!-- X-Axis Labels -->
+<div class="absolute bottom-0 left-0 w-full flex justify-between px-4 mt-2">
+<span class="text-xs text-on-surface-variant">Week 1</span>
+<span class="text-xs text-on-surface-variant">Week 2</span>
+<span class="text-xs text-on-surface-variant">Week 3</span>
+<span class="text-xs text-on-surface-variant">Week 4</span>
+</div>
+<!-- SVG Line -->
+<svg class="absolute inset-0 w-full h-full pb-8 pt-4" preserveaspectratio="none" viewbox="0 0 100 100">
+<defs>
+<lineargradient id="lineGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#10b981" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#10b981" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path class="chart-line" d="M0,80 L25,40 L50,60 L75,20 L100,30" fill="none" stroke="#10b981" stroke-width="2"></path>
+<path d="M0,80 L25,40 L50,60 L75,20 L100,30 L100,100 L0,100 Z" fill="url(#lineGradient)"></path>
+<!-- Data Points -->
+<circle cx="25" cy="40" fill="#ffffff" r="2" stroke="#10b981" stroke-width="1.5"></circle>
+<circle cx="50" cy="60" fill="#ffffff" r="2" stroke="#10b981" stroke-width="1.5"></circle>
+<circle cx="75" cy="20" fill="#ffffff" r="2" stroke="#10b981" stroke-width="1.5"></circle>
+<circle cx="100" cy="30" fill="#ffffff" r="2" stroke="#10b981" stroke-width="1.5"></circle>
+</svg>
+</div>
+</div>
+<!-- Recent Highlights List -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="font-h3 text-h3 text-on-surface mb-md">Recent Highlights</h3>
+<div class="space-y-0">
+<div class="flex items-center gap-md py-md border-b border-outline-variant/50 last:border-0">
+<div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container">directions_run</span>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-on-surface">Sprint Intervals</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Improved top speed by 5%</p>
+</div>
+<div class="text-right">
+<p class="font-label-md text-label-md text-primary-container">+5%</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Today</p>
+</div>
+</div>
+<div class="flex items-center gap-md py-md border-b border-outline-variant/50 last:border-0">
+<div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container">fitness_center</span>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-on-surface">Strength Conditioning</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">New personal record</p>
+</div>
+<div class="text-right">
+<p class="font-label-md text-label-md text-primary-container">PR</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Yesterday</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-base py-sm bg-surface dark:bg-background border-t border-outline-variant dark:border-outline md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-xl active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label-sm text-label-sm mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-xl active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 0;">event_note</span>
+<span class="font-label-sm text-label-sm mt-1">Logs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-xl active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 0;">sports_soccer</span>
+<span class="font-label-sm text-label-sm mt-1">Matches</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed bg-secondary-container dark:bg-on-secondary-fixed-variant rounded-xl px-3 py-1 active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+<span class="font-label-sm text-label-sm mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-xl active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

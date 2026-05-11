@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Training Log</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#e8f0e9",
+                        "inverse-primary": "#4edea3",
+                        "on-secondary-fixed": "#002115",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#006c4b",
+                        "inverse-on-surface": "#ebf3eb",
+                        "on-tertiary-fixed-variant": "#005137",
+                        "tertiary-container": "#00b982",
+                        "on-error": "#ffffff",
+                        "secondary": "#1b6b4f",
+                        "on-tertiary-container": "#00422c",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#dde4dd",
+                        "on-surface-variant": "#3c4a42",
+                        "primary": "#006c49",
+                        "on-background": "#161d19",
+                        "surface-container-highest": "#dde4dd",
+                        "on-secondary-fixed-variant": "#00513a",
+                        "surface": "#f4fbf4",
+                        "outline": "#6c7a71",
+                        "on-secondary-container": "#247155",
+                        "primary-container": "#10b981",
+                        "secondary-fixed": "#a6f2cf",
+                        "surface-dim": "#d4dcd5",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f4fbf4",
+                        "on-primary-fixed-variant": "#005236",
+                        "surface-tint": "#006c49",
+                        "tertiary-fixed-dim": "#45dfa4",
+                        "inverse-surface": "#2b322d",
+                        "outline-variant": "#bbcabf",
+                        "secondary-container": "#a6f2cf",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#4edea3",
+                        "surface-container-high": "#e3eae3",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#eef6ee",
+                        "on-surface": "#161d19",
+                        "primary-fixed": "#6ffbbe",
+                        "on-primary-fixed": "#002113",
+                        "tertiary-fixed": "#68fcbf",
+                        "on-tertiary-fixed": "#002114",
+                        "background": "#f4fbf4",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#00422b",
+                        "secondary-fixed-dim": "#8bd6b4",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "base": "4px",
+                        "gutter": "16px",
+                        "sm": "8px",
+                        "container-margin": "20px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Lexend"],
+                        "body-lg": ["Inter"],
+                        "h1": ["Lexend"],
+                        "label-md": ["Inter"],
+                        "h3": ["Lexend"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "h3": ["20px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "letterSpacing": "0", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #F9FAFB; /* Off-white app background */
+        }
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md text-on-surface antialiased flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-surface border-b border-outline-variant">
+<div class="flex justify-between items-center px-gutter py-sm w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-sm">
+<img alt="User Profile" class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A close-up portrait of a focused male athlete with short hair, wearing a dark athletic shirt. The lighting is soft and studio-quality, creating a modern, professional light-mode aesthetic against a very light grey background. The mood is determined and energetic, fitting a premium sports tracking application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnTxdOJXL1cBAkmgH23Myo7M5YctcXg4q-qiaI6Z3DdT7IFS1cbd0poPimyfTB4Z57i8VKiUYvdAlZxtfXVcBUQendM98QQusYhdBLX3RqbPstlw6WPXBwB2seGSodk8NIMu7h-eiAnG8s9RvNufkGYfzpCEs-zCzMtGL9ekIc7MKGXGhdWEMT2NSyclIQ3dWItrVoFPMZ9E7SN9zYqzw9h2wMLUwYoLUpkO_StP_6ruHgb7nwRa57K77XxeRbd1F4Uuol5UkFlV6N"/>
+<h1 class="font-h2 text-h2 font-bold text-primary">Elite Trainer</h1>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-150 text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-3xl mx-auto px-gutter py-xl pb-32">
+<div class="mb-lg">
+<h2 class="font-h1 text-h1 text-on-surface mb-sm">Log Training</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Record your latest session details to track your progress.</p>
+</div>
+<!-- Success Message Placeholder (Hidden by default, shown for demonstration of design) -->
+<div class="bg-surface-container-low border border-primary-container rounded-lg p-md mb-lg flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">Session Saved!</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Your training log has been successfully updated.</p>
+</div>
+</div>
+<!-- Form Card -->
+<div class="bg-on-primary border border-outline-variant rounded-xl p-lg shadow-sm">
+<form class="space-y-xl">
+<!-- Date & Duration Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface" for="date">Date</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">calendar_today</span>
+<input class="w-full pl-10 pr-3 py-2 bg-on-primary border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors" id="date" name="date" type="date"/>
+</div>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface" for="duration">Duration (mins)</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">timer</span>
+<input class="w-full pl-10 pr-3 py-2 bg-on-primary border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors" id="duration" name="duration" placeholder="e.g. 45" type="number"/>
+</div>
+</div>
+</div>
+<!-- Intensity Level (Custom Radio Buttons for better UI) -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface">Intensity Level</label>
+<div class="flex items-center justify-between gap-sm bg-surface-container-lowest border border-outline-variant rounded-lg p-2">
+<!-- 1 -->
+<label class="flex-1 cursor-pointer">
+<input class="peer sr-only" name="intensity" type="radio" value="1"/>
+<div class="text-center py-2 rounded-md font-label-md text-label-md text-on-surface-variant peer-checked:bg-secondary-container peer-checked:text-primary transition-colors hover:bg-surface-container-low">
+                                1
+                            </div>
+</label>
+<!-- 2 -->
+<label class="flex-1 cursor-pointer">
+<input class="peer sr-only" name="intensity" type="radio" value="2"/>
+<div class="text-center py-2 rounded-md font-label-md text-label-md text-on-surface-variant peer-checked:bg-secondary-container peer-checked:text-primary transition-colors hover:bg-surface-container-low">
+                                2
+                            </div>
+</label>
+<!-- 3 -->
+<label class="flex-1 cursor-pointer">
+<input checked="" class="peer sr-only" name="intensity" type="radio" value="3"/>
+<div class="text-center py-2 rounded-md font-label-md text-label-md text-on-surface-variant peer-checked:bg-secondary-container peer-checked:text-primary transition-colors hover:bg-surface-container-low">
+                                3
+                            </div>
+</label>
+<!-- 4 -->
+<label class="flex-1 cursor-pointer">
+<input class="peer sr-only" name="intensity" type="radio" value="4"/>
+<div class="text-center py-2 rounded-md font-label-md text-label-md text-on-surface-variant peer-checked:bg-secondary-container peer-checked:text-primary transition-colors hover:bg-surface-container-low">
+                                4
+                            </div>
+</label>
+<!-- 5 -->
+<label class="flex-1 cursor-pointer">
+<input class="peer sr-only" name="intensity" type="radio" value="5"/>
+<div class="text-center py-2 rounded-md font-label-md text-label-md text-on-surface-variant peer-checked:bg-secondary-container peer-checked:text-primary transition-colors hover:bg-surface-container-low">
+                                5
+                            </div>
+</label>
+</div>
+<div class="flex justify-between px-1">
+<span class="font-label-sm text-label-sm text-outline">Light Recovery</span>
+<span class="font-label-sm text-label-sm text-outline">All Out Match</span>
+</div>
+</div>
+<!-- Distance & Location Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface" for="distance">Distance (km)</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">directions_run</span>
+<input class="w-full pl-10 pr-3 py-2 bg-on-primary border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors" id="distance" name="distance" placeholder="e.g. 5.5" step="0.1" type="number"/>
+</div>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface" for="location">Location</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">location_on</span>
+<input class="w-full pl-10 pr-3 py-2 bg-on-primary border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors" id="location" name="location" placeholder="e.g. Training Ground A" type="text"/>
+</div>
+</div>
+</div>
+<!-- Notes Textarea -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface" for="notes">Session Notes</label>
+<textarea class="w-full p-3 bg-on-primary border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors resize-none" id="notes" name="notes" placeholder="Felt strong in the second half..." rows="3"></textarea>
+</div>
+<!-- Submit Button -->
+<div class="pt-sm">
+<button class="w-full bg-primary-container text-on-primary font-h3 text-h3 py-3 rounded-[10px] active:scale-95 transition-transform duration-150 flex items-center justify-center gap-sm" type="button">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">save</span>
+                        Save Training
+                    </button>
+</div>
+</form>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-base py-sm bg-surface shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors rounded-xl active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary bg-secondary-container rounded-xl px-3 py-1 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">event_note</span>
+<span class="font-label-sm text-label-sm font-bold">Logs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors rounded-xl active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mb-1">sports_soccer</span>
+<span class="font-label-sm text-label-sm">Matches</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors rounded-xl active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mb-1">leaderboard</span>
+<span class="font-label-sm text-label-sm">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors rounded-xl active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<!-- Desktop Navigation Cluster (Visible only on md+) -->
+<div class="hidden md:flex fixed top-0 left-1/2 -translate-x-1/2 z-50 h-[72px] items-center gap-md">
+<a class="text-on-surface-variant hover:bg-surface-container-low px-4 py-2 rounded-full transition-colors font-label-md text-label-md" href="#">Dashboard</a>
+<a class="text-primary font-bold bg-surface-container-high px-4 py-2 rounded-full transition-colors font-label-md text-label-md" href="#">Logs</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low px-4 py-2 rounded-full transition-colors font-label-md text-label-md" href="#">Matches</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low px-4 py-2 rounded-full transition-colors font-label-md text-label-md" href="#">Stats</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low px-4 py-2 rounded-full transition-colors font-label-md text-label-md" href="#">Profile</a>
+</div>
+</body></html>

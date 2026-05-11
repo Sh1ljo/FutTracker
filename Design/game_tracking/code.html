@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Game Tracking - Elite Trainer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lexend:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#e8f0e9",
+                        "inverse-primary": "#4edea3",
+                        "on-secondary-fixed": "#002115",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#006c4b",
+                        "inverse-on-surface": "#ebf3eb",
+                        "on-tertiary-fixed-variant": "#005137",
+                        "tertiary-container": "#00b982",
+                        "on-error": "#ffffff",
+                        "secondary": "#1b6b4f",
+                        "on-tertiary-container": "#00422c",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#dde4dd",
+                        "on-surface-variant": "#3c4a42",
+                        "primary": "#006c49",
+                        "on-background": "#161d19",
+                        "surface-container-highest": "#dde4dd",
+                        "on-secondary-fixed-variant": "#00513a",
+                        "surface": "#f4fbf4",
+                        "outline": "#6c7a71",
+                        "on-secondary-container": "#247155",
+                        "primary-container": "#10b981",
+                        "secondary-fixed": "#a6f2cf",
+                        "surface-dim": "#d4dcd5",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f4fbf4",
+                        "on-primary-fixed-variant": "#005236",
+                        "surface-tint": "#006c49",
+                        "tertiary-fixed-dim": "#45dfa4",
+                        "inverse-surface": "#2b322d",
+                        "outline-variant": "#bbcabf",
+                        "secondary-container": "#a6f2cf",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#4edea3",
+                        "surface-container-high": "#e3eae3",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#eef6ee",
+                        "on-surface": "#161d19",
+                        "primary-fixed": "#6ffbbe",
+                        "on-primary-fixed": "#002113",
+                        "tertiary-fixed": "#68fcbf",
+                        "on-tertiary-fixed": "#002114",
+                        "background": "#f4fbf4",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#00422b",
+                        "secondary-fixed-dim": "#8bd6b4",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "base": "4px",
+                        "gutter": "16px",
+                        "sm": "8px",
+                        "container-margin": "20px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Lexend"],
+                        "body-lg": ["Inter"],
+                        "h1": ["Lexend"],
+                        "label-md": ["Inter"],
+                        "h3": ["Lexend"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "h3": ["20px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "letterSpacing": "0", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased pb-24 md:pb-0">
+<!-- TopAppBar (Web & Tablet) -->
+<header class="hidden md:flex bg-surface w-full top-0 sticky border-b border-outline-variant justify-between items-center px-gutter py-sm max-w-7xl mx-auto z-40">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A close-up portrait of a focused male athlete, set against a clean, light mode background. The lighting is bright and even, highlighting a determined expression. The overall aesthetic aligns with a modern, sporty-corporate visual style, utilizing a vibrant green and crisp white color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyJGAUyGg6DROCEMrXvQ3OAAJ_GikA5f9XGDKvrOzY05Q2uwwKAaFAguFcQgH5bTPcUbE1rrZXF6yjL_qtWUXmPnk6Kjv04Ixt1owv3uzizm8PPFJXIhiLG2OabHSJ8SfCPBuIgZC87WZu4UBZWKpIPVyItiIsCirkWA5XnN1V46_bukE9DJiQaVRsK3WTosGSKeYizx2coBLZQlJySEa65AdK5bRkuFd6ezf4_onUqhCPc_rNIhwFN8cvjOjE734GYfQBmjufyIP3"/>
+</div>
+<h1 class="font-h2 text-h2 font-bold text-primary">Elite Trainer</h1>
+</div>
+<nav class="flex gap-6">
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors px-3 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors px-3 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">event_note</span> Logs
+            </a>
+<a class="text-primary font-bold hover:bg-surface-container-low transition-colors px-3 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">sports_soccer</span> Matches
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors px-3 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">leaderboard</span> Stats
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors px-3 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">person</span> Profile
+            </a>
+</nav>
+<button class="text-primary hover:bg-surface-container-low transition-colors p-2 rounded-full active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<!-- Mobile Header -->
+<header class="md:hidden bg-surface w-full top-0 sticky border-b border-outline-variant flex justify-between items-center px-gutter py-sm z-40">
+<h1 class="font-h2 text-h2 font-bold text-primary">Elite Trainer</h1>
+<button class="text-primary hover:bg-surface-container-low transition-colors p-2 rounded-full active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<main class="max-w-7xl mx-auto px-gutter py-lg space-y-xl">
+<!-- Game Banner & Score -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-[10px] p-lg">
+<div class="flex flex-col items-center justify-center space-y-md">
+<div class="flex justify-between items-center w-full max-w-2xl">
+<div class="flex flex-col items-center gap-sm">
+<div class="w-16 h-16 md:w-20 md:h-20 bg-secondary-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[32px]">shield</span>
+</div>
+<span class="font-h3 text-h3 text-on-surface">Eagles FC</span>
+</div>
+<div class="flex flex-col items-center justify-center px-lg">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-2">Live Score</span>
+<div class="flex items-center gap-md">
+<span class="font-h1 text-h1 text-primary text-5xl md:text-7xl">2</span>
+<span class="font-h3 text-h3 text-outline">-</span>
+<span class="font-h1 text-h1 text-on-surface text-5xl md:text-7xl">1</span>
+</div>
+<span class="font-label-sm text-label-sm text-error mt-2 flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-error animate-pulse"></span> 78:42</span>
+</div>
+<div class="flex flex-col items-center gap-sm">
+<div class="w-16 h-16 md:w-20 md:h-20 bg-surface-container-highest rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-[32px]">shield</span>
+</div>
+<span class="font-h3 text-h3 text-on-surface">Falcons Utd</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Player Stats Grid -->
+<section>
+<h2 class="font-h3 text-h3 text-on-surface mb-md">My Performance</h2>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-md">
+<!-- Stat Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-[10px] p-md flex flex-col justify-center items-center">
+<div class="w-10 h-10 bg-secondary-container rounded-[10px] flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-primary">sports_soccer</span>
+</div>
+<span class="font-h2 text-h2 text-on-surface">1</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Goals</span>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-[10px] p-md flex flex-col justify-center items-center">
+<div class="w-10 h-10 bg-secondary-container rounded-[10px] flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-primary">group</span>
+</div>
+<span class="font-h2 text-h2 text-on-surface">0</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Assists</span>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-[10px] p-md flex flex-col justify-center items-center">
+<div class="w-10 h-10 bg-secondary-container rounded-[10px] flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-primary">swap_horiz</span>
+</div>
+<span class="font-h2 text-h2 text-on-surface">42</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Passes</span>
+</div>
+<!-- Stat Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-[10px] p-md flex flex-col justify-center items-center">
+<div class="w-10 h-10 bg-secondary-container rounded-[10px] flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-primary">sports_kabaddi</span>
+</div>
+<span class="font-h2 text-h2 text-on-surface">6</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Tackles</span>
+</div>
+<!-- Stat Card 5 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-[10px] p-md flex flex-col justify-center items-center col-span-2 md:col-span-1">
+<div class="w-10 h-10 bg-secondary-container rounded-[10px] flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-primary">timer</span>
+</div>
+<span class="font-h2 text-h2 text-on-surface">78</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Minutes</span>
+</div>
+</div>
+</section>
+<!-- Post-game Notes -->
+<section>
+<h2 class="font-h3 text-h3 text-on-surface mb-md">Post-Game Notes</h2>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-[10px] p-md">
+<textarea class="w-full bg-surface border border-outline-variant rounded-lg p-sm font-body-md text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary min-h-[120px] resize-none" placeholder="Add notes about your performance, opponent tactics, or areas to improve..."></textarea>
+</div>
+</section>
+<!-- Action Button -->
+<section class="flex justify-center md:justify-end mt-xl">
+<button class="bg-primary-container text-on-primary font-label-md text-label-md px-lg py-md rounded-[10px] w-full md:w-auto hover:bg-primary transition-colors flex items-center justify-center gap-sm active:scale-95 duration-150">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+                Finish Game
+            </button>
+</section>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-base py-sm bg-surface shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+<span class="font-label-sm text-label-sm mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[24px]">event_note</span>
+<span class="font-label-sm text-label-sm mt-1">Logs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary bg-secondary-container rounded-xl px-3 py-1 hover:bg-surface-variant transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">sports_soccer</span>
+<span class="font-label-sm text-label-sm mt-1 font-semibold">Matches</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[24px]">leaderboard</span>
+<span class="font-label-sm text-label-sm mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile &amp; Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#e8f0e9",
+                        "inverse-primary": "#4edea3",
+                        "on-secondary-fixed": "#002115",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#006c4b",
+                        "inverse-on-surface": "#ebf3eb",
+                        "on-tertiary-fixed-variant": "#005137",
+                        "tertiary-container": "#00b982",
+                        "on-error": "#ffffff",
+                        "secondary": "#1b6b4f",
+                        "on-tertiary-container": "#00422c",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#dde4dd",
+                        "on-surface-variant": "#3c4a42",
+                        "primary": "#006c49",
+                        "on-background": "#161d19",
+                        "surface-container-highest": "#dde4dd",
+                        "on-secondary-fixed-variant": "#00513a",
+                        "surface": "#f4fbf4",
+                        "outline": "#6c7a71",
+                        "on-secondary-container": "#247155",
+                        "primary-container": "#10b981",
+                        "secondary-fixed": "#a6f2cf",
+                        "surface-dim": "#d4dcd5",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f4fbf4",
+                        "on-primary-fixed-variant": "#005236",
+                        "surface-tint": "#006c49",
+                        "tertiary-fixed-dim": "#45dfa4",
+                        "inverse-surface": "#2b322d",
+                        "outline-variant": "#bbcabf",
+                        "secondary-container": "#a6f2cf",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#4edea3",
+                        "surface-container-high": "#e3eae3",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#eef6ee",
+                        "on-surface": "#161d19",
+                        "primary-fixed": "#6ffbbe",
+                        "on-primary-fixed": "#002113",
+                        "tertiary-fixed": "#68fcbf",
+                        "on-tertiary-fixed": "#002114",
+                        "background": "#f4fbf4",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#00422b",
+                        "secondary-fixed-dim": "#8bd6b4",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "base": "4px",
+                        "gutter": "16px",
+                        "sm": "8px",
+                        "container-margin": "20px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Lexend"],
+                        "body-lg": ["Inter"],
+                        "h1": ["Lexend"],
+                        "label-md": ["Inter"],
+                        "h3": ["Lexend"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "h3": ["20px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "letterSpacing": "0", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface dark:bg-background border-b border-outline-variant dark:border-outline z-50">
+<div class="flex justify-between items-center px-gutter py-sm w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-sm cursor-pointer hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-95 transition-transform duration-150 p-2 rounded-full">
+<img alt="User Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="A close-up, high-quality portrait of a modern athlete with a determined expression. The lighting is bright and clean, fitting a sporty-corporate aesthetic. The background is a soft, minimalist white to seamlessly blend with a clean, light-mode interface. The focus is sharp on the face, conveying professionalism and energy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBX2dY1wJOMIvEkltelxgesO1bP-oVN-QifDM_9Tda4d5EOqtti4fHPEx92w2lMkWwG8L2AxetxMnRZXqldX8H0i46XikYu-0NbLpmI6ro1BuimID34KLB2uq5h33Ohug8JxNZ5ZbzYTcQ29RhyHn5bnefBB9cgDyOXS300gj8UtJSgq3RbXBC-8KzbomXyimsxCG40i9DKbhOz-CngI7MhU32MFT49KcKvV_dCb1Ep4szziyNHAVMUWp6LP-48ex2LrUjNI6YVcTgO"/>
+</div>
+<h1 class="font-h2 text-h2 font-bold text-primary dark:text-primary-fixed">Elite Trainer</h1>
+<div class="flex items-center justify-center w-10 h-10 cursor-pointer hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-95 transition-transform duration-150 rounded-full text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</div>
+</div>
+</header>
+<main class="w-full max-w-7xl mx-auto px-gutter pt-lg md:pt-xl pb-xl">
+<!-- Profile Header Bento -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-md mb-xl">
+<!-- Main Profile Card -->
+<div class="md:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col md:flex-row items-center md:items-start gap-lg text-center md:text-left">
+<div class="relative">
+<img alt="Profile Picture" class="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-surface" data-alt="A close-up, high-quality portrait of a modern athlete with a determined expression. The lighting is bright and clean, fitting a sporty-corporate aesthetic. The background is a soft, minimalist white to seamlessly blend with a clean, light-mode interface. The focus is sharp on the face, conveying professionalism and energy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtaw-JE7BKM-3K8YNd7XETvJQ5FTnCpDuun1OaWGjllCTeCodFpp8i-6alsmdw1QVbi8F4bvxP7SheC2erUTifKUhuBzFW8rUs1c7AzI6rszD9MwFE9Dr5uBtxlnbllvtOZzJm576tKVvASRZ9u9dUOnBWbQmQl0u-k2KcZWjmUZ5Ea43-EBwdTO7_7_I7QmxsXr2Gn5Xj1dZqNnMNuGdOwJAnWw8yooYMa_GhFX609MSS8uHq_5RyR9yfWX2YNYnmV-NH8HlruZZx"/>
+<button class="absolute bottom-0 right-0 w-8 h-8 bg-primary-container text-on-primary flex items-center justify-center rounded-full hover:bg-tertiary-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+<div class="flex-1 flex flex-col justify-center h-full">
+<h2 class="font-h1 text-h1 text-on-background mb-xs">Alex Rivers</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Professional Forward</p>
+<div class="flex flex-wrap justify-center md:justify-start gap-sm">
+<span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-3 py-1 rounded-full">Dribbling</span>
+<span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-3 py-1 rounded-full">Stamina</span>
+<span class="bg-surface-container-high text-on-surface font-label-sm text-label-sm px-3 py-1 rounded-full">Pro Tier</span>
+</div>
+</div>
+</div>
+<!-- Quick Stats Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between">
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-sm">Training Streak</h3>
+<div class="flex items-baseline gap-xs">
+<span class="font-h1 text-h1 text-primary">14</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Days</span>
+</div>
+</div>
+<div class="mt-md">
+<div class="flex justify-between font-label-sm text-label-sm mb-xs">
+<span class="text-on-surface-variant">Weekly Goal</span>
+<span class="text-primary font-bold">85%</span>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 85%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Settings List -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden mb-xl">
+<h3 class="font-h3 text-h3 px-lg py-md border-b border-outline-variant text-on-background">Settings</h3>
+<div class="flex flex-col">
+<a class="flex items-center px-lg py-md border-b border-outline-variant hover:bg-surface-container-low transition-colors group" href="#">
+<div class="w-10 h-10 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center mr-md group-hover:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-md text-body-md font-semibold text-on-background">Edit Profile</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Update your personal information</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</a>
+<a class="flex items-center px-lg py-md border-b border-outline-variant hover:bg-surface-container-low transition-colors group" href="#">
+<div class="w-10 h-10 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center mr-md group-hover:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-md text-body-md font-semibold text-on-background">Preferences</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Theme, units, and layout</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</a>
+<a class="flex items-center px-lg py-md border-b border-outline-variant hover:bg-surface-container-low transition-colors group" href="#">
+<div class="w-10 h-10 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center mr-md group-hover:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-md text-body-md font-semibold text-on-background">Notifications</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Manage alerts and reminders</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</a>
+<a class="flex items-center px-lg py-md hover:bg-surface-container-low transition-colors group" href="#">
+<div class="w-10 h-10 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center mr-md group-hover:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-md text-body-md font-semibold text-on-background">About</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">App version and policies</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</a>
+</div>
+</section>
+<!-- Action Area -->
+<section class="flex justify-center">
+<button class="flex items-center justify-center gap-sm w-full md:w-auto px-xl py-md bg-transparent border border-error text-error font-label-md text-label-md rounded-lg hover:bg-error-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+                Logout
+            </button>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-base py-sm bg-surface dark:bg-background shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] border-t border-outline-variant dark:border-outline">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-95 duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-95 duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="event_note">event_note</span>
+<span class="font-label-sm text-label-sm mt-1">Logs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-95 duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="sports_soccer">sports_soccer</span>
+<span class="font-label-sm text-label-sm mt-1">Matches</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-95 duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-label-sm text-label-sm mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed bg-secondary-container dark:bg-on-secondary-fixed-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-95 duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="person" data-weight="fill">person</span>
+<span class="font-label-sm text-label-sm mt-1 font-bold">Profile</span>
+</a>
+</nav>
+</body></html>
