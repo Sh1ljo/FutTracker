@@ -93,14 +93,14 @@ class DashboardScreen extends StatelessWidget {
       children: [
         Text('Welcome back, $firstName',
             style: GoogleFonts.lexend(
-                fontSize: 28,
+                fontSize: 22,
                 fontWeight: FontWeight.w700,
                 color: AppColors.onBackground,
                 letterSpacing: -0.5)),
         const SizedBox(height: 4),
         Text('Ready to crush your goals today?',
             style: GoogleFonts.inter(
-                fontSize: 16, color: AppColors.onSurfaceVariant)),
+                fontSize: 13, color: AppColors.onSurfaceVariant)),
       ],
     );
   }
@@ -161,12 +161,12 @@ class DashboardScreen extends StatelessWidget {
         icon: const Icon(Icons.add_circle, color: Colors.white),
         label: Text('Log Training',
             style: GoogleFonts.lexend(
-                fontSize: 17,
+                fontSize: 14,
                 fontWeight: FontWeight.w600,
                 color: Colors.white)),
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryContainer,
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 13),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 0,
@@ -186,12 +186,12 @@ class DashboardScreen extends StatelessWidget {
         icon: const Icon(Icons.sports_soccer, color: AppColors.primary),
         label: Text('Log Match',
             style: GoogleFonts.lexend(
-                fontSize: 17,
+                fontSize: 14,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primary)),
         style: OutlinedButton.styleFrom(
           side: const BorderSide(color: AppColors.primary, width: 1.5),
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 13),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
@@ -227,7 +227,7 @@ class DashboardScreen extends StatelessWidget {
         children: [
           Text('Weekly Load',
               style: GoogleFonts.lexend(
-                  fontSize: 18,
+                  fontSize: 15,
                   fontWeight: FontWeight.w600,
                   color: AppColors.onBackground)),
           const SizedBox(height: 16),
@@ -340,7 +340,7 @@ class DashboardScreen extends StatelessWidget {
                   children: [
                     Text('Recent Activity',
                         style: GoogleFonts.lexend(
-                            fontSize: 18,
+                            fontSize: 15,
                             fontWeight: FontWeight.w600,
                             color: AppColors.onBackground)),
                     if (streak > 0)

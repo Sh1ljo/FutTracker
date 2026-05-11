@@ -82,7 +82,7 @@ class _MainShellState extends State<MainShell> {
     NavigationDestination(
       icon: Icon(Icons.trending_up_outlined),
       selectedIcon: Icon(Icons.trending_up),
-      label: 'Form Guide',
+      label: 'Form',
     ),
     NavigationDestination(
       icon: Icon(Icons.person_outline),
@@ -148,18 +148,34 @@ class _MainShellState extends State<MainShell> {
   }
 
   Widget _buildBottomNav(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.outlineVariant, width: 1)),
+    return Theme(
+      data: Theme.of(context).copyWith(
+        navigationBarTheme: NavigationBarThemeData(
+          height: 60,
+          labelTextStyle: WidgetStateProperty.all(
+            GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.w500),
+          ),
+          iconTheme: WidgetStateProperty.all(
+            const IconThemeData(size: 20),
+          ),
+        ),
       ),
-      child: NavigationBar(
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (i) => setState(() => _currentIndex = i),
-        backgroundColor: AppColors.surface,
-        indicatorColor: AppColors.secondaryContainer,
-        elevation: 0,
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        destinations: _navItems,
+      child: Container(
+        decoration: const BoxDecoration(
+          border: Border(top: BorderSide(color: AppColors.outlineVariant, width: 1)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: NavigationBar(
+            selectedIndex: _currentIndex,
+            onDestinationSelected: (i) => setState(() => _currentIndex = i),
+            backgroundColor: AppColors.surface,
+            indicatorColor: AppColors.secondaryContainer,
+            elevation: 0,
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+            destinations: _navItems,
+          ),
+        ),
       ),
     );
   }
