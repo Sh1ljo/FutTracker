@@ -38,10 +38,22 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
   ];
 
   static const _allFocusAreas = [
-    'Dribbling', 'Passing', 'Shooting', 'Pressing',
-    'Positioning', 'Stamina', 'Speed', 'Strength',
-    'Core', 'Agility', 'Team Shape', 'Explosiveness',
-    'Mental Reset', 'Ball Control', 'Headers', 'Defending',
+    'Dribbling',
+    'Passing',
+    'Shooting',
+    'Pressing',
+    'Positioning',
+    'Stamina',
+    'Speed',
+    'Strength',
+    'Core',
+    'Agility',
+    'Team Shape',
+    'Explosiveness',
+    'Mental Reset',
+    'Ball Control',
+    'Headers',
+    'Defending',
   ];
 
   @override
@@ -82,7 +94,8 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
       distance: _distanceCtrl.text.trim().isEmpty
           ? null
           : double.tryParse(_distanceCtrl.text.trim()),
-      location: _locationCtrl.text.trim().isEmpty ? null : _locationCtrl.text.trim(),
+      location:
+          _locationCtrl.text.trim().isEmpty ? null : _locationCtrl.text.trim(),
       notes: _notesCtrl.text.trim().isEmpty ? null : _notesCtrl.text.trim(),
       createdAt: widget.existing?.createdAt ?? DateTime.now().toIso8601String(),
       trainingType: _trainingType,
@@ -99,7 +112,10 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
     } else {
       await context.read<AppProvider>().addSession(session);
     }
-    setState(() { _saved = true; _saving = false; });
+    setState(() {
+      _saved = true;
+      _saving = false;
+    });
     await Future.delayed(const Duration(milliseconds: 800));
     if (mounted) Navigator.pop(context);
   }
@@ -138,7 +154,9 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
         ),
         title: Text(isEdit ? 'Edit Session' : 'Log Training',
             style: GoogleFonts.lexend(
-                fontSize: 20, fontWeight: FontWeight.w700, color: AppColors.primary)),
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: AppColors.primary)),
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(1),
           child: Divider(height: 1, color: AppColors.outlineVariant),
@@ -190,7 +208,8 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
 
               // ─── Biometrics ──────────────────────────────────────
               _sectionCard([
-                _sectionHeader('Performance Metrics', Icons.monitor_heart_outlined),
+                _sectionHeader(
+                    'Performance Metrics', Icons.monitor_heart_outlined),
                 const SizedBox(height: 16),
                 Row(children: [
                   Expanded(child: _buildCaloriesField()),
@@ -205,7 +224,8 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
                 _sectionHeader('Focus Areas', Icons.track_changes_outlined),
                 const SizedBox(height: 4),
                 Text('Select all that apply',
-                    style: GoogleFonts.inter(fontSize: 12, color: AppColors.onSurfaceVariant)),
+                    style: GoogleFonts.inter(
+                        fontSize: 12, color: AppColors.onSurfaceVariant)),
                 const SizedBox(height: 12),
                 _buildFocusAreaChips(),
               ]),
@@ -226,16 +246,22 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
                   onPressed: _saving ? null : _save,
                   icon: _saving
                       ? const SizedBox(
-                          width: 18, height: 18,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                      : Icon(isEdit ? Icons.save : Icons.check_circle_outline, color: Colors.white),
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(
+                              strokeWidth: 2, color: Colors.white))
+                      : Icon(isEdit ? Icons.save : Icons.check_circle_outline,
+                          color: Colors.white),
                   label: Text(isEdit ? 'Update Session' : 'Save Training',
                       style: GoogleFonts.lexend(
-                          fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryContainer,
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
                     elevation: 0,
                   ),
                 ),
@@ -255,14 +281,16 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
         border: Border.all(color: AppColors.outlineVariant),
       ),
       padding: const EdgeInsets.all(20),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: children),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, children: children),
     );
   }
 
   Widget _sectionHeader(String title, IconData icon) {
     return Row(children: [
       Container(
-        width: 32, height: 32,
+        width: 32,
+        height: 32,
         decoration: BoxDecoration(
           color: AppColors.secondaryContainer,
           borderRadius: BorderRadius.circular(8),
@@ -272,7 +300,9 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
       const SizedBox(width: 10),
       Text(title,
           style: GoogleFonts.lexend(
-              fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.onBackground)),
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: AppColors.onBackground)),
     ]);
   }
 
@@ -286,19 +316,24 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
       ),
       child: Row(children: [
         Container(
-          width: 40, height: 40,
+          width: 40,
+          height: 40,
           decoration: const BoxDecoration(
               color: AppColors.primaryContainer, shape: BoxShape.circle),
           child: const Icon(Icons.check_circle, color: Colors.white, size: 22),
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text('Session Saved!',
                 style: GoogleFonts.lexend(
-                    fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.onBackground)),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.onBackground)),
             Text('Your training log has been updated.',
-                style: GoogleFonts.inter(fontSize: 13, color: AppColors.onSurfaceVariant)),
+                style: GoogleFonts.inter(
+                    fontSize: 13, color: AppColors.onSurfaceVariant)),
           ]),
         ),
       ]),
@@ -306,102 +341,185 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
   }
 
   Widget _buildDateField() {
-    return _fieldLabel('Date', GestureDetector(
-      onTap: _pickDate,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        decoration: BoxDecoration(
-          color: AppColors.surfaceContainerLowest,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: AppColors.outlineVariant),
-        ),
-        child: Row(children: [
-          const Icon(Icons.calendar_today, size: 18, color: AppColors.onSurfaceVariant),
-          const SizedBox(width: 8),
-          Text(
-            '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}',
-            style: GoogleFonts.inter(fontSize: 14, color: AppColors.onBackground),
+    return _fieldLabel(
+        'Date',
+        GestureDetector(
+          onTap: _pickDate,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            decoration: BoxDecoration(
+              color: AppColors.surfaceContainerLowest,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: AppColors.outlineVariant),
+            ),
+            child: Row(children: [
+              const Icon(Icons.calendar_today,
+                  size: 18, color: AppColors.onSurfaceVariant),
+              const SizedBox(width: 8),
+              Text(
+                '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}',
+                style: GoogleFonts.inter(
+                    fontSize: 14, color: AppColors.onBackground),
+              ),
+            ]),
           ),
-        ]),
-      ),
-    ));
+        ));
   }
 
   Widget _buildDurationField() {
-    return _fieldLabel('Duration (mins)', TextFormField(
-      controller: _durationCtrl,
-      keyboardType: TextInputType.number,
-      style: GoogleFonts.inter(fontSize: 14),
-      decoration: InputDecoration(
-        hintText: 'e.g. 45',
-        hintStyle: GoogleFonts.inter(color: AppColors.onSurfaceVariant),
-        prefixIcon: const Icon(Icons.timer_outlined, color: AppColors.onSurfaceVariant, size: 20),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-      ),
-      validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
-    ));
+    return _fieldLabel(
+        'Duration (mins)',
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          TextFormField(
+            controller: _durationCtrl,
+            keyboardType: TextInputType.number,
+            style: GoogleFonts.inter(fontSize: 14),
+            decoration: InputDecoration(
+              hintText: 'e.g. 45',
+              hintStyle: GoogleFonts.inter(color: AppColors.onSurfaceVariant),
+              prefixIcon: const Icon(Icons.timer_outlined,
+                  color: AppColors.onSurfaceVariant, size: 20),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            ),
+            validator: (v) {
+              if (v == null || v.trim().isEmpty) return 'Required';
+              final parsed = int.tryParse(v.trim());
+              if (parsed == null) return 'Enter a valid number';
+              if (parsed < 5 || parsed > 240) return 'Use 5-240 mins';
+              return null;
+            },
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            children: [30, 45, 60, 75, 90]
+                .map((m) => _quickChip('$m', () => _durationCtrl.text = '$m'))
+                .toList(),
+          ),
+        ]));
   }
 
   Widget _buildDistanceField() {
-    return _fieldLabel('Distance (km)', TextFormField(
-      controller: _distanceCtrl,
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      style: GoogleFonts.inter(fontSize: 14),
-      decoration: InputDecoration(
-        hintText: 'e.g. 5.5',
-        hintStyle: GoogleFonts.inter(color: AppColors.onSurfaceVariant),
-        prefixIcon: const Icon(Icons.directions_run_outlined, color: AppColors.onSurfaceVariant, size: 20),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-      ),
-    ));
+    return _fieldLabel(
+        'Distance (km)',
+        TextFormField(
+          controller: _distanceCtrl,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          style: GoogleFonts.inter(fontSize: 14),
+          decoration: InputDecoration(
+            hintText: 'e.g. 5.5',
+            hintStyle: GoogleFonts.inter(color: AppColors.onSurfaceVariant),
+            prefixIcon: const Icon(Icons.directions_run_outlined,
+                color: AppColors.onSurfaceVariant, size: 20),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          ),
+          validator: (v) {
+            if (v == null || v.trim().isEmpty) return null;
+            final parsed = double.tryParse(v.trim());
+            if (parsed == null) return 'Enter a valid number';
+            if (parsed < 0 || parsed > 30) return 'Use 0-30 km';
+            return null;
+          },
+        ));
   }
 
   Widget _buildLocationField() {
-    return _fieldLabel('Location', TextFormField(
-      controller: _locationCtrl,
-      style: GoogleFonts.inter(fontSize: 14),
-      decoration: InputDecoration(
-        hintText: 'Training Ground A',
-        hintStyle: GoogleFonts.inter(color: AppColors.onSurfaceVariant),
-        prefixIcon: const Icon(Icons.location_on_outlined, color: AppColors.onSurfaceVariant, size: 20),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-      ),
-    ));
+    return _fieldLabel(
+        'Location',
+        TextFormField(
+          controller: _locationCtrl,
+          style: GoogleFonts.inter(fontSize: 14),
+          decoration: InputDecoration(
+            hintText: 'Training Ground A',
+            hintStyle: GoogleFonts.inter(color: AppColors.onSurfaceVariant),
+            prefixIcon: const Icon(Icons.location_on_outlined,
+                color: AppColors.onSurfaceVariant, size: 20),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          ),
+        ));
   }
 
   Widget _buildCaloriesField() {
-    return _fieldLabel('Calories Burned', TextFormField(
-      controller: _caloriesCtrl,
-      keyboardType: TextInputType.number,
-      style: GoogleFonts.inter(fontSize: 14),
-      decoration: InputDecoration(
-        hintText: 'e.g. 650',
-        hintStyle: GoogleFonts.inter(color: AppColors.onSurfaceVariant),
-        prefixIcon: const Icon(Icons.local_fire_department_outlined, color: AppColors.onSurfaceVariant, size: 20),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-      ),
-    ));
+    return _fieldLabel(
+        'Calories Burned',
+        TextFormField(
+          controller: _caloriesCtrl,
+          keyboardType: TextInputType.number,
+          style: GoogleFonts.inter(fontSize: 14),
+          decoration: InputDecoration(
+            hintText: 'e.g. 650',
+            hintStyle: GoogleFonts.inter(color: AppColors.onSurfaceVariant),
+            prefixIcon: const Icon(Icons.local_fire_department_outlined,
+                color: AppColors.onSurfaceVariant, size: 20),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          ),
+          validator: (v) {
+            if (v == null || v.trim().isEmpty) return null;
+            final parsed = int.tryParse(v.trim());
+            if (parsed == null) return 'Enter a valid number';
+            if (parsed < 0 || parsed > 2500) return 'Use 0-2500 kcal';
+            return null;
+          },
+        ));
   }
 
   Widget _buildHeartRateField() {
-    return _fieldLabel('Avg Heart Rate (bpm)', TextFormField(
-      controller: _heartRateCtrl,
-      keyboardType: TextInputType.number,
-      style: GoogleFonts.inter(fontSize: 14),
-      decoration: InputDecoration(
-        hintText: 'e.g. 148',
-        hintStyle: GoogleFonts.inter(color: AppColors.onSurfaceVariant),
-        prefixIcon: const Icon(Icons.monitor_heart_outlined, color: AppColors.onSurfaceVariant, size: 20),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+    return _fieldLabel(
+        'Avg Heart Rate (bpm)',
+        TextFormField(
+          controller: _heartRateCtrl,
+          keyboardType: TextInputType.number,
+          style: GoogleFonts.inter(fontSize: 14),
+          decoration: InputDecoration(
+            hintText: 'e.g. 148',
+            hintStyle: GoogleFonts.inter(color: AppColors.onSurfaceVariant),
+            prefixIcon: const Icon(Icons.monitor_heart_outlined,
+                color: AppColors.onSurfaceVariant, size: 20),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          ),
+          validator: (v) {
+            if (v == null || v.trim().isEmpty) return null;
+            final parsed = int.tryParse(v.trim());
+            if (parsed == null) return 'Enter a valid number';
+            if (parsed < 60 || parsed > 220) return 'Use 60-220 bpm';
+            return null;
+          },
+        ));
+  }
+
+  Widget _quickChip(String label, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: () => setState(onTap),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+          color: AppColors.surfaceContainerHigh,
+          borderRadius: BorderRadius.circular(100),
+          border: Border.all(color: AppColors.outlineVariant),
+        ),
+        child: Text(
+          label,
+          style: GoogleFonts.inter(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: AppColors.onSurfaceVariant),
+        ),
       ),
-    ));
+    );
   }
 
   Widget _fieldLabel(String label, Widget child) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(label,
           style: GoogleFonts.inter(
-              fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.onSurfaceVariant)),
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: AppColors.onSurfaceVariant)),
       const SizedBox(height: 6),
       child,
     ]);
@@ -419,14 +537,19 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
             duration: const Duration(milliseconds: 180),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: selected ? AppColors.primaryContainer : AppColors.surfaceContainerHigh,
+              color: selected
+                  ? AppColors.primaryContainer
+                  : AppColors.surfaceContainerHigh,
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color: selected ? AppColors.primaryContainer : AppColors.outlineVariant,
+                color: selected
+                    ? AppColors.primaryContainer
+                    : AppColors.outlineVariant,
               ),
             ),
             child: Row(mainAxisSize: MainAxisSize.min, children: [
-              Icon(t.$2, size: 16,
+              Icon(t.$2,
+                  size: 16,
                   color: selected ? Colors.white : AppColors.onSurfaceVariant),
               const SizedBox(width: 6),
               Text(t.$1,
@@ -463,14 +586,19 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
                   margin: const EdgeInsets.symmetric(horizontal: 2),
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   decoration: BoxDecoration(
-                    color: selected ? AppColors.primaryContainer : Colors.transparent,
+                    color: selected
+                        ? AppColors.primaryContainer
+                        : Colors.transparent,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(label,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
-                          fontSize: 14, fontWeight: FontWeight.w700,
-                          color: selected ? Colors.white : AppColors.onSurfaceVariant)),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: selected
+                              ? Colors.white
+                              : AppColors.onSurfaceVariant)),
                 ),
               ),
             );
@@ -488,7 +616,9 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
         child: Text(intensityNames[_intensity - 1],
             textAlign: TextAlign.center,
             style: GoogleFonts.inter(
-                fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: AppColors.primary)),
       ),
     ]);
   }
@@ -501,14 +631,19 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
         final selected = _focusAreas.contains(area);
         return GestureDetector(
           onTap: () => setState(() {
-            if (selected) { _focusAreas.remove(area); }
-            else { _focusAreas.add(area); }
+            if (selected) {
+              _focusAreas.remove(area);
+            } else {
+              _focusAreas.add(area);
+            }
           }),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 160),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
             decoration: BoxDecoration(
-              color: selected ? AppColors.secondaryContainer : AppColors.surfaceContainerHigh,
+              color: selected
+                  ? AppColors.secondaryContainer
+                  : AppColors.surfaceContainerHigh,
               borderRadius: BorderRadius.circular(100),
               border: Border.all(
                 color: selected ? AppColors.primary : AppColors.outlineVariant,
@@ -516,8 +651,11 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
             ),
             child: Text(area,
                 style: GoogleFonts.inter(
-                    fontSize: 12, fontWeight: FontWeight.w500,
-                    color: selected ? AppColors.primary : AppColors.onSurfaceVariant)),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: selected
+                        ? AppColors.primary
+                        : AppColors.onSurfaceVariant)),
           ),
         );
       }).toList(),
@@ -531,7 +669,8 @@ class _AddTrainingScreenState extends State<AddTrainingScreen> {
       style: GoogleFonts.inter(fontSize: 14),
       decoration: InputDecoration(
         hintText: 'How did it go? What did you work on? How do you feel?',
-        hintStyle: GoogleFonts.inter(color: AppColors.onSurfaceVariant, fontSize: 13),
+        hintStyle:
+            GoogleFonts.inter(color: AppColors.onSurfaceVariant, fontSize: 13),
         contentPadding: const EdgeInsets.all(14),
       ),
     );

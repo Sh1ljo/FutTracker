@@ -25,13 +25,12 @@ class AppProvider extends ChangeNotifier {
       _trainingStreak = 0;
       return;
     }
-    final sessionDates = _sessions
-        .map((s) => s.date)
-        .toSet();
+    final sessionDates = _sessions.map((s) => s.date).toSet();
     int streak = 0;
     var day = DateTime.now();
     while (true) {
-      final key = '${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}';
+      final key =
+          '${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}';
       if (sessionDates.contains(key)) {
         streak++;
         day = day.subtract(const Duration(days: 1));
@@ -46,7 +45,24 @@ class AppProvider extends ChangeNotifier {
   String get profileName => _profile['name'] ?? 'Alex Rivers';
   String get profilePosition => _profile['position'] ?? 'Professional Forward';
   String get profileSkills => _profile['skills'] ?? 'Dribbling,Stamina';
-  int get profileWeeklyGoal => int.tryParse(_profile['weekly_goal'] ?? '5') ?? 5;
+  int get profileWeeklyGoal =>
+      int.tryParse(_profile['weekly_goal'] ?? '5') ?? 5;
+  double get profileAvgRatingGoal =>
+      double.tryParse(_profile['goal_avg_rating'] ?? '7.0') ?? 7.0;
+  String get profileFocusSkill {
+    final stored = _profile['goal_focus_skill'] ?? '';
+    if (stored.isNotEmpty) return stored;
+    final firstSkill = profileSkills
+        .split(',')
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .cast<String?>()
+        .firstWhere((e) => e != null, orElse: () => null);
+    return firstSkill ?? 'Passing';
+  }
+
+  int get profileFocusSkillSessionsGoal =>
+      int.tryParse(_profile['goal_focus_sessions'] ?? '2') ?? 2;
   String get profileTeam => _profile['team'] ?? '';
   String get profileJerseyNumber => _profile['jersey_number'] ?? '';
   String get profileAge => _profile['age'] ?? '';

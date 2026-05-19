@@ -191,6 +191,19 @@ class _AddMatchScreenState extends State<AddMatchScreen> {
                   Expanded(child: _labeled('Minutes', _numField(_minutesCtrl))),
                   const Expanded(child: SizedBox()),
                 ]),
+                const SizedBox(height: 10),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    _quickChip('60 min', () => _minutesCtrl.text = '60'),
+                    _quickChip('75 min', () => _minutesCtrl.text = '75'),
+                    _quickChip('90 min', () => _minutesCtrl.text = '90'),
+                    _quickChip('Rating 6', () => _ratingCtrl.text = '6'),
+                    _quickChip('Rating 7', () => _ratingCtrl.text = '7'),
+                    _quickChip('Rating 8', () => _ratingCtrl.text = '8'),
+                  ],
+                ),
                 const SizedBox(height: 12),
                 _ratingSection(),
               ]),
@@ -332,6 +345,31 @@ class _AddMatchScreenState extends State<AddMatchScreen> {
       decoration: const InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       ),
+      validator: (v) {
+        final value = (v ?? '').trim();
+        if (value.isEmpty) return null;
+        final parsed = int.tryParse(value);
+        if (parsed == null) return 'Invalid';
+
+        if (identical(ctrl, _minutesCtrl) && (parsed < 0 || parsed > 130)) {
+          return '0-130';
+        }
+        if (identical(ctrl, _ratingCtrl) && (parsed < 1 || parsed > 10)) {
+          return '1-10';
+        }
+        if ((identical(ctrl, _homeScoreCtrl) ||
+                identical(ctrl, _awayScoreCtrl) ||
+                identical(ctrl, _goalsCtrl) ||
+                identical(ctrl, _assistsCtrl) ||
+                identical(ctrl, _tacklesCtrl)) &&
+            (parsed < 0 || parsed > 25)) {
+          return '0-25';
+        }
+        if (identical(ctrl, _passesCtrl) && (parsed < 0 || parsed > 200)) {
+          return '0-200';
+        }
+        return null;
+      },
     );
   }
 
@@ -410,6 +448,25 @@ class _AddMatchScreenState extends State<AddMatchScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _quickChip(String label, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: () => setState(onTap),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+          color: AppColors.surfaceContainerHigh,
+          borderRadius: BorderRadius.circular(100),
+          border: Border.all(color: AppColors.outlineVariant),
+        ),
+        child: Text(label,
+            style: GoogleFonts.inter(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: AppColors.onSurfaceVariant)),
+      ),
     );
   }
 }

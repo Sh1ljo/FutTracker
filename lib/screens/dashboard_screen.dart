@@ -15,7 +15,6 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<AppProvider>();
-    final stats = provider.dashboardStats;
     final sessions = provider.sessions;
     final matches = provider.matches;
     final name = provider.profileName.split(' ').first;
@@ -102,51 +101,6 @@ class DashboardScreen extends StatelessWidget {
             style: GoogleFonts.inter(
                 fontSize: 13, color: AppColors.onSurfaceVariant)),
       ],
-    );
-  }
-
-  Widget _buildQuickStats(BuildContext context, Map<String, dynamic> stats) {
-    final items = [
-      {'value': '${stats['trainings'] ?? 0}', 'label': 'Trainings'},
-      {'value': '${stats['games'] ?? 0}', 'label': 'Games'},
-      {'value': '${stats['goals'] ?? 0}', 'label': 'Goals'},
-      {'value': '${stats['assists'] ?? 0}', 'label': 'Assists'},
-      {'value': '${stats['passes'] ?? 0}', 'label': 'Passes'},
-    ];
-    return GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      childAspectRatio: 1.6,
-      mainAxisSpacing: 12,
-      crossAxisSpacing: 12,
-      children: items.map((item) {
-        return Container(
-          decoration: BoxDecoration(
-            color: AppColors.surfaceContainerLowest,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.outlineVariant),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(item['value']!,
-                  style: GoogleFonts.lexend(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primary)),
-              const SizedBox(height: 6),
-              Text(item['label']!.toUpperCase(),
-                  style: GoogleFonts.inter(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.8,
-                      color: AppColors.onSurfaceVariant)),
-            ],
-          ),
-        );
-      }).toList(),
     );
   }
 

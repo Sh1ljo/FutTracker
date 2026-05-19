@@ -510,6 +510,42 @@ class MatchDetailScreen extends StatelessWidget {
                   builder: (_) => AddMatchScreen(existing: match)),
             ),
           ),
+          IconButton(
+            icon: const Icon(Icons.delete_outline, color: AppColors.error),
+            tooltip: 'Delete Match',
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
+                  title: Text('Delete Match',
+                      style: GoogleFonts.lexend(fontWeight: FontWeight.w600)),
+                  content: Text('Remove match vs ${match.opponent}?',
+                      style: GoogleFonts.inter()),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(ctx),
+                      child: Text('Cancel',
+                          style: GoogleFonts.inter(
+                              color: AppColors.onSurfaceVariant)),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<AppProvider>().deleteMatch(match.id!);
+                        Navigator.pop(ctx);
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.error,
+                          foregroundColor: Colors.white),
+                      child: Text('Delete', style: GoogleFonts.inter()),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         ],
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(1),

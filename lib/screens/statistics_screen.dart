@@ -15,6 +15,109 @@ class StatisticsScreen extends StatefulWidget {
 class _StatisticsScreenState extends State<StatisticsScreen> {
   int _selectedPeriod = 1; // 0=Week, 1=Month, 2=All Time
 
+  DateTime _startOfWeek(DateTime date) {
+    return DateTime(date.year, date.month, date.day)
+        .subtract(Duration(days: date.weekday - 1));
+  }
+
+  List<DateTime> _last4WeekStarts() {
+    final currentWeek = _startOfWeek(DateTime.now());
+    return List.generate(
+      4,
+      (i) => currentWeek.subtract(Duration(days: (3 - i) * 7)),
+    );
+  }
+
+  int _weeklyTrainingMinutes(
+      List<TrainingSession> sessions, DateTime weekStart) {
+    final weekEnd = weekStart.add(const Duration(days: 7));
+    return sessions.where((s) {
+      final d = DateTime.tryParse(s.date);
+      return d != null && !d.isBefore(weekStart) && d.isBefore(weekEnd);
+    }).fold(0, (sum, s) => sum + s.duration);
+  }
+
+  double _weeklyAverageRating(List<Match> matches, DateTime weekStart) {
+    final weekEnd = weekStart.add(const Duration(days: 7));
+    final weekMatches = matches.where((m) {
+      final d = DateTime.tryParse(m.date);
+      return d != null && !d.isBefore(weekStart) && d.isBefore(weekEnd);
+    }).toList();
+    if (weekMatches.isEmpty) return 0;
+    return weekMatches.fold<double>(0, (sum, m) => sum + m.rating) /
+        weekMatches.length;
+  }
+
+  double _weeklyGoalContribution(List<Match> matches, DateTime weekStart) {
+    final weekEnd = weekStart.add(const Duration(days: 7));
+    final weekMatches = matches.where((m) {
+      final d = DateTime.tryParse(m.date);
+      return d != null && !d.isBefore(weekStart) && d.isBefore(weekEnd);
+    }).toList();
+    if (weekMatches.isEmpty) return 0;
+    return weekMatches.fold<double>(0, (sum, m) => sum + m.goals + m.assists) /
+        weekMatches.length;
+  }
+
+  String _trendLabel(num current, num previous,
+      {String suffix = '', bool higherIsBetter = true}) {
+    final diff = current - previous;
+    if (diff.abs() < 0.01) return 'Stable';
+    final direction = diff > 0 ? 'up' : 'down';
+    final value = diff.abs().toStringAsFixed(suffix.isEmpty ? 0 : 1);
+    final positive = higherIsBetter ? diff > 0 : diff < 0;
+    return '${positive ? 'Improving' : 'Declining'} · $direction $value$suffix';
+  }
+
+  List<String> _buildInsights({
+    required List<TrainingSession> allSessions,
+    required List<Match> allMatches,
+    required int thisWeekSessions,
+    required int weeklyGoal,
+    required double avgIntensity,
+    required double avgRating,
+    required double ratingGoal,
+    required int focusSkillHits,
+    required int focusSkillGoal,
+    required String focusSkill,
+  }) {
+    final insights = <String>[];
+
+    if (thisWeekSessions < weeklyGoal) {
+      insights.add(
+          'You are ${weeklyGoal - thisWeekSessions} sessions from your weekly target. Plan one extra session this week.');
+    } else {
+      insights.add('Great consistency — weekly training target achieved.');
+    }
+
+    if (avgIntensity >= 4 && thisWeekSessions >= 3) {
+      insights.add(
+          'Your recent load is high (intensity ${avgIntensity.toStringAsFixed(1)}/5). Add a recovery session to avoid fatigue.');
+    }
+
+    if (allMatches.isNotEmpty) {
+      if (avgRating < ratingGoal) {
+        insights.add(
+            'Average rating is ${avgRating.toStringAsFixed(1)} vs goal ${ratingGoal.toStringAsFixed(1)}. Focus on your strongest role actions next match.');
+      } else {
+        insights.add(
+            'Match rating goal is on track (${avgRating.toStringAsFixed(1)} / ${ratingGoal.toStringAsFixed(1)}). Keep current preparation routine.');
+      }
+    }
+
+    if (focusSkillGoal > 0) {
+      if (focusSkillHits < focusSkillGoal) {
+        insights.add(
+            'Skill focus "$focusSkill" appears in $focusSkillHits/$focusSkillGoal sessions this week — add it in your next training.');
+      } else {
+        insights.add(
+            'Skill focus "$focusSkill" target achieved this week. Build on it in match situations.');
+      }
+    }
+
+    return insights.take(3).toList();
+  }
+
   // Filter sessions & matches to the selected period
   DateTime get _cutoff {
     final now = DateTime.now();
@@ -49,6 +152,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     final provider = context.watch<AppProvider>();
     final sessions = _filterSessions(provider.sessions);
     final matches = _filterMatches(provider.matches);
+    final allSessions = provider.sessions;
+    final allMatches = provider.matches;
 
     // Compute stats from filtered data
     final totalGoals = matches.fold(0, (sum, m) => sum + m.goals);
@@ -62,6 +167,56 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         sessions.fold(0.0, (sum, s) => sum + (s.distance ?? 0.0));
     final totalCalories =
         sessions.fold(0, (sum, s) => sum + (s.caloriesBurned ?? 0));
+
+    final weekStarts = _last4WeekStarts();
+    final weeklyTrainingMins4w =
+        weekStarts.map((w) => _weeklyTrainingMinutes(allSessions, w)).toList();
+    final weeklyAvgRating4w =
+        weekStarts.map((w) => _weeklyAverageRating(allMatches, w)).toList();
+    final weeklyGA4w =
+        weekStarts.map((w) => _weeklyGoalContribution(allMatches, w)).toList();
+
+    final thisWeekStart = _startOfWeek(DateTime.now());
+    final thisWeekEnd = thisWeekStart.add(const Duration(days: 7));
+    final thisWeekSessions = allSessions.where((s) {
+      final d = DateTime.tryParse(s.date);
+      return d != null && !d.isBefore(thisWeekStart) && d.isBefore(thisWeekEnd);
+    }).length;
+
+    final thisMonthMatches = allMatches.where((m) {
+      final d = DateTime.tryParse(m.date);
+      if (d == null) return false;
+      final now = DateTime.now();
+      return d.year == now.year && d.month == now.month;
+    }).toList();
+    final avgRatingThisMonth = thisMonthMatches.isEmpty
+        ? 0.0
+        : thisMonthMatches.fold<double>(0, (sum, m) => sum + m.rating) /
+            thisMonthMatches.length;
+
+    final focusSkill = provider.profileFocusSkill;
+    final focusSkillHits = allSessions.where((s) {
+      final d = DateTime.tryParse(s.date);
+      if (d == null || d.isBefore(thisWeekStart) || !d.isBefore(thisWeekEnd)) {
+        return false;
+      }
+      return s.focusAreaList
+          .map((e) => e.toLowerCase())
+          .contains(focusSkill.toLowerCase());
+    }).length;
+
+    final insights = _buildInsights(
+      allSessions: allSessions,
+      allMatches: allMatches,
+      thisWeekSessions: thisWeekSessions,
+      weeklyGoal: provider.profileWeeklyGoal,
+      avgIntensity: avgIntensity,
+      avgRating: avgRatingThisMonth,
+      ratingGoal: provider.profileAvgRatingGoal,
+      focusSkillHits: focusSkillHits,
+      focusSkillGoal: provider.profileFocusSkillSessionsGoal,
+      focusSkill: focusSkill,
+    );
 
     // Weekly volume (always last 7 days, regardless of period selector)
     final weeklyData = _buildWeeklyData(provider.sessions);
@@ -99,6 +254,27 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                 _buildPeriodSelector(),
                 const SizedBox(height: 20),
                 _buildSummaryBanner(sessions, matches),
+                const SizedBox(height: 16),
+                _buildTrendSection(
+                  minsCurrent: weeklyTrainingMins4w[3],
+                  minsPrevious: weeklyTrainingMins4w[2],
+                  ratingCurrent: weeklyAvgRating4w[3],
+                  ratingPrevious: weeklyAvgRating4w[2],
+                  gaCurrent: weeklyGA4w[3],
+                  gaPrevious: weeklyGA4w[2],
+                ),
+                const SizedBox(height: 16),
+                _buildGoalProgressCard(
+                  weeklyGoal: provider.profileWeeklyGoal,
+                  thisWeekSessions: thisWeekSessions,
+                  avgRatingGoal: provider.profileAvgRatingGoal,
+                  avgRatingThisMonth: avgRatingThisMonth,
+                  focusSkill: focusSkill,
+                  focusSkillGoal: provider.profileFocusSkillSessionsGoal,
+                  focusSkillHits: focusSkillHits,
+                ),
+                const SizedBox(height: 16),
+                _buildActionableInsightsCard(insights),
                 const SizedBox(height: 16),
                 _buildMetricGrid(totalGoals, totalAssists, totalTrainings,
                     totalTrainingMins, totalDistanceKm, totalCalories),
@@ -217,6 +393,208 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           _bannerStat('$winRate%', 'Win Rate', periodLabel),
         ],
       ),
+    );
+  }
+
+  Widget _buildTrendSection({
+    required int minsCurrent,
+    required int minsPrevious,
+    required double ratingCurrent,
+    required double ratingPrevious,
+    required double gaCurrent,
+    required double gaPrevious,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.surfaceContainerLowest,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.outlineVariant),
+      ),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('4-Week Trends',
+              style: GoogleFonts.lexend(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.onBackground)),
+          const SizedBox(height: 12),
+          _trendTile(
+            'Training Minutes',
+            '$minsCurrent',
+            _trendLabel(minsCurrent, minsPrevious, suffix: 'm'),
+            minsCurrent >= minsPrevious,
+          ),
+          const SizedBox(height: 8),
+          _trendTile(
+            'Avg Match Rating',
+            ratingCurrent == 0 ? '—' : ratingCurrent.toStringAsFixed(1),
+            _trendLabel(ratingCurrent, ratingPrevious),
+            ratingCurrent >= ratingPrevious,
+          ),
+          const SizedBox(height: 8),
+          _trendTile(
+            'Goals + Assists / Match',
+            gaCurrent == 0 ? '—' : gaCurrent.toStringAsFixed(1),
+            _trendLabel(gaCurrent, gaPrevious),
+            gaCurrent >= gaPrevious,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _trendTile(
+      String title, String value, String subtitle, bool positive) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: AppColors.surfaceContainerHigh,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            positive ? Icons.trending_up : Icons.trending_down,
+            size: 18,
+            color: positive ? AppColors.primaryContainer : AppColors.error,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(title,
+                  style: GoogleFonts.inter(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.onBackground)),
+              Text(subtitle,
+                  style: GoogleFonts.inter(
+                      fontSize: 11, color: AppColors.onSurfaceVariant)),
+            ]),
+          ),
+          Text(value,
+              style: GoogleFonts.lexend(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primary)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGoalProgressCard({
+    required int weeklyGoal,
+    required int thisWeekSessions,
+    required double avgRatingGoal,
+    required double avgRatingThisMonth,
+    required String focusSkill,
+    required int focusSkillGoal,
+    required int focusSkillHits,
+  }) {
+    final weeklyRatio =
+        weeklyGoal > 0 ? (thisWeekSessions / weeklyGoal).clamp(0.0, 1.0) : 0.0;
+    final ratingRatio = avgRatingGoal > 0
+        ? (avgRatingThisMonth / avgRatingGoal).clamp(0.0, 1.0)
+        : 0.0;
+    final skillRatio = focusSkillGoal > 0
+        ? (focusSkillHits / focusSkillGoal).clamp(0.0, 1.0)
+        : 0.0;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.surfaceContainerLowest,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.outlineVariant),
+      ),
+      padding: const EdgeInsets.all(16),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text('Goal Progress',
+            style: GoogleFonts.lexend(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: AppColors.onBackground)),
+        const SizedBox(height: 12),
+        _goalRow(
+            'Weekly Sessions', '$thisWeekSessions/$weeklyGoal', weeklyRatio),
+        const SizedBox(height: 10),
+        _goalRow(
+            'Avg Rating This Month',
+            '${avgRatingThisMonth == 0 ? '—' : avgRatingThisMonth.toStringAsFixed(1)}/${avgRatingGoal.toStringAsFixed(1)}',
+            ratingRatio),
+        const SizedBox(height: 10),
+        _goalRow('Focus Skill: $focusSkill', '$focusSkillHits/$focusSkillGoal',
+            skillRatio),
+      ]),
+    );
+  }
+
+  Widget _goalRow(String label, String value, double progress) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Expanded(
+          child: Text(label,
+              style: GoogleFonts.inter(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.onBackground)),
+        ),
+        Text(value,
+            style: GoogleFonts.inter(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: AppColors.primary)),
+      ]),
+      const SizedBox(height: 6),
+      ClipRRect(
+        borderRadius: BorderRadius.circular(4),
+        child: LinearProgressIndicator(
+          minHeight: 7,
+          value: progress,
+          backgroundColor: AppColors.surfaceContainerHigh,
+          valueColor:
+              const AlwaysStoppedAnimation<Color>(AppColors.primaryContainer),
+        ),
+      ),
+    ]);
+  }
+
+  Widget _buildActionableInsightsCard(List<String> insights) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.surfaceContainerLowest,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.outlineVariant),
+      ),
+      padding: const EdgeInsets.all(16),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text('Actionable Insights',
+            style: GoogleFonts.lexend(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: AppColors.onBackground)),
+        const SizedBox(height: 10),
+        ...insights.map((tip) => Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 2),
+                    child: Icon(Icons.tips_and_updates_outlined,
+                        size: 15, color: AppColors.primary),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(tip,
+                        style: GoogleFonts.inter(
+                            fontSize: 12, color: AppColors.onSurfaceVariant)),
+                  ),
+                ],
+              ),
+            )),
+      ]),
     );
   }
 

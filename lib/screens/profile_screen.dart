@@ -432,6 +432,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late final TextEditingController _jerseyCtrl;
   late final TextEditingController _ageCtrl;
   late final TextEditingController _weeklyGoalCtrl;
+  late final TextEditingController _avgRatingGoalCtrl;
+  late final TextEditingController _focusSkillSessionsGoalCtrl;
+  late String _selectedFocusSkill;
   final Set<String> _skills = {};
   bool _saving = false;
 
@@ -478,10 +481,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _jerseyCtrl = TextEditingController(text: p.profileJerseyNumber);
     _ageCtrl = TextEditingController(text: p.profileAge);
     _weeklyGoalCtrl = TextEditingController(text: '${p.profileWeeklyGoal}');
+    _avgRatingGoalCtrl =
+        TextEditingController(text: p.profileAvgRatingGoal.toStringAsFixed(1));
+    _focusSkillSessionsGoalCtrl =
+        TextEditingController(text: '${p.profileFocusSkillSessionsGoal}');
+    _selectedFocusSkill = p.profileFocusSkill;
     _skills.addAll(p.profileSkills
         .split(',')
         .map((e) => e.trim())
         .where((e) => e.isNotEmpty));
+
+    if (!_allSkills.contains(_selectedFocusSkill)) {
+      _selectedFocusSkill = _allSkills.first;
+    }
   }
 
   @override
@@ -492,6 +504,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _jerseyCtrl.dispose();
     _ageCtrl.dispose();
     _weeklyGoalCtrl.dispose();
+    _avgRatingGoalCtrl.dispose();
+    _focusSkillSessionsGoalCtrl.dispose();
     super.dispose();
   }
 
@@ -507,6 +521,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       'weekly_goal': _weeklyGoalCtrl.text.trim().isEmpty
           ? '5'
           : _weeklyGoalCtrl.text.trim(),
+      'goal_avg_rating': _avgRatingGoalCtrl.text.trim().isEmpty
+          ? '7.0'
+          : _avgRatingGoalCtrl.text.trim(),
+      'goal_focus_skill': _selectedFocusSkill,
+      'goal_focus_sessions': _focusSkillSessionsGoalCtrl.text.trim().isEmpty
+          ? '2'
+          : _focusSkillSessionsGoalCtrl.text.trim(),
       'skills': _skills.join(','),
     });
     setState(() => _saving = false);
@@ -604,6 +625,81 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               ]),
             ),
+            const SizedBox(height: 28),
+
+            // ─── Performance Goals ─────────────────────────────────────
+            _sectionCard([
+              _sectionHeader('Performance Goals', Icons.track_changes_outlined),
+              const SizedBox(height: 4),
+              Text('Keep goals simple and actionable',
+                  style: GoogleFonts.inter(
+                      fontSize: 12, color: AppColors.onSurfaceVariant)),
+              const SizedBox(height: 12),
+              _buildField(
+                  'Average Match Rating Goal (1-10)', _avgRatingGoalCtrl,
+                  hint: 'e.g. 7.0',
+                  icon: Icons.star_outline,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  validator: (v) {
+                if (v == null || v.trim().isEmpty) return null;
+                final parsed = double.tryParse(v.trim());
+                if (parsed == null) return 'Enter a valid number';
+                if (parsed < 1 || parsed > 10) return 'Use range 1-10';
+                return null;
+              }),
+              const SizedBox(height: 14),
+              Text('Focus Skill',
+                  style: GoogleFonts.inter(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.onSurfaceVariant)),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: _allSkills.map((skill) {
+                  final selected = _selectedFocusSkill == skill;
+                  return GestureDetector(
+                    onTap: () => setState(() => _selectedFocusSkill = skill),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 160),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 7),
+                      decoration: BoxDecoration(
+                        color: selected
+                            ? AppColors.primaryContainer
+                            : AppColors.surfaceContainerHigh,
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(
+                            color: selected
+                                ? AppColors.primaryContainer
+                                : AppColors.outlineVariant),
+                      ),
+                      child: Text(skill,
+                          style: GoogleFonts.inter(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: selected
+                                  ? Colors.white
+                                  : AppColors.onSurfaceVariant)),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 14),
+              _buildField(
+                  'Focus Skill Sessions per Week', _focusSkillSessionsGoalCtrl,
+                  hint: 'e.g. 2',
+                  icon: Icons.flag_outlined,
+                  keyboardType: TextInputType.number, validator: (v) {
+                if (v == null || v.trim().isEmpty) return null;
+                final parsed = int.tryParse(v.trim());
+                if (parsed == null) return 'Enter a valid number';
+                if (parsed < 1 || parsed > 7) return 'Use range 1-7';
+                return null;
+              }),
+            ]),
             const SizedBox(height: 28),
 
             // ─── Personal Info ────────────────────────────────────────
