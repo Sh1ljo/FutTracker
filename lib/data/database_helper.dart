@@ -20,7 +20,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 3,
+      version: 4,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -59,7 +59,8 @@ class DatabaseHelper {
         minutes_played INTEGER DEFAULT 0,
         rating INTEGER DEFAULT 5,
         notes TEXT,
-        created_at TEXT NOT NULL
+        created_at TEXT NOT NULL,
+        match_type TEXT DEFAULT 'normal'
       )
     ''');
 
@@ -89,6 +90,9 @@ class DatabaseHelper {
     }
     if (oldVersion < 3) {
       await db.execute('ALTER TABLE matches ADD COLUMN rating INTEGER DEFAULT 5');
+    }
+    if (oldVersion < 4) {
+      await db.execute("ALTER TABLE matches ADD COLUMN match_type TEXT DEFAULT 'normal'");
     }
   }
 
@@ -169,6 +173,7 @@ class DatabaseHelper {
         'minutes_played': 90,
         'notes': 'Strong performance. Scored the winner.',
         'created_at': now.subtract(const Duration(days: 4)).toIso8601String(),
+        'rating': 7,
       },
       {
         'date': now.subtract(const Duration(days: 11)).toIso8601String().split('T')[0],
@@ -183,6 +188,7 @@ class DatabaseHelper {
         'minutes_played': 80,
         'notes': 'Tough draw. Improved second half.',
         'created_at': now.subtract(const Duration(days: 11)).toIso8601String(),
+        'match_type': 'five_a_side',
       },
       {
         'date': now.subtract(const Duration(days: 18)).toIso8601String().split('T')[0],
@@ -197,6 +203,7 @@ class DatabaseHelper {
         'minutes_played': 90,
         'notes': 'Best game of the season so far.',
         'created_at': now.subtract(const Duration(days: 18)).toIso8601String(),
+        'rating': 9,
       },
     ];
     for (final m in matches) {

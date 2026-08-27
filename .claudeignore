@@ -1,0 +1,58 @@
+# =============================================================================
+# .claudeignore – FutTracker (Flutter)
+# =============================================================================
+# Tell Claude Code to skip files that are irrelevant to understanding or
+# modifying the application.  You rarely need to read these.
+#
+# Syntax: same as .gitignore (globs, **, leading / for root-only).
+# =============================================================================
+
+# ---- Build output (449 MB, purely generated) -------------------------------
+/build/
+
+# ---- Dart tool cache (103 MB, purely generated) ----------------------------
+/.dart_tool/
+
+# ---- Git internals ----------------------------------------------------------
+.git/
+
+# ---- Binary / large media files (unreadable by Claude) ----------------------
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.icns
+*.jng
+*.svgz
+
+# ---- Lock & generated config files (mirrors pubspec.yaml / .gitignore) ------
+/pubspec.lock
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+
+# ---- Platform caches & intermediate build dirs ------------------------------
+/.gradle/
+/android/.gradle/
+/ios/Pods/
+/ios/.symlinks/
+
+# ---- Standalone utility scripts (not app code) ------------------------------
+/generate_icons.py
+/icon_source.png
+
+# =============================================================================
+# Platform directories
+# =============================================================================
+# The 150+ files under android/, ios/, macos/, windows/, and linux/ are
+# boilerplate scaffolded by `flutter create`.  They almost never need to be
+# read during normal development.
+#
+# Uncomment any platform you *are* actively working on.
+# =============================================================================
+/android/
+/ios/
+/macos/
+/windows/
+/linux/

@@ -13,6 +13,10 @@ class Match {
   final int rating;
   final String? notes;
   final String createdAt;
+  final String matchType; // 'normal' or 'five_a_side'
+
+  bool get isFiveASide => matchType == 'five_a_side';
+  String get matchTypeLabel => isFiveASide ? '5-a-Side' : 'Normal Match';
 
   const Match({
     this.id,
@@ -29,6 +33,7 @@ class Match {
     this.rating = 5,
     this.notes,
     required this.createdAt,
+    this.matchType = 'normal',
   });
 
   Map<String, dynamic> toMap() => {
@@ -46,6 +51,7 @@ class Match {
     'rating': rating,
     'notes': notes,
     'created_at': createdAt,
+    'match_type': matchType,
   };
 
   static Match fromMap(Map<String, dynamic> map) => Match(
@@ -63,6 +69,7 @@ class Match {
     rating: map['rating'] as int? ?? 5,
     notes: map['notes'] as String?,
     createdAt: map['created_at'] as String,
+    matchType: map['match_type'] as String? ?? 'normal',
   );
 
   Match copyWith({
@@ -80,6 +87,7 @@ class Match {
     int? rating,
     String? notes,
     String? createdAt,
+    String? matchType,
   }) => Match(
     id: id ?? this.id,
     date: date ?? this.date,
@@ -95,6 +103,7 @@ class Match {
     rating: rating ?? this.rating,
     notes: notes ?? this.notes,
     createdAt: createdAt ?? this.createdAt,
+    matchType: matchType ?? this.matchType,
   );
 
   String get result {

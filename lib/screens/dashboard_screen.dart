@@ -18,6 +18,8 @@ class DashboardScreen extends StatelessWidget {
     final sessions = provider.sessions;
     final matches = provider.matches;
     final name = provider.profileName.split(' ').first;
+    final weeklyCount = provider.getWeeklyTrainingSessions();
+    final avgRating = provider.getAverageMatchRating();
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -29,6 +31,8 @@ class DashboardScreen extends StatelessWidget {
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 _buildWelcome(context, name),
+                const SizedBox(height: 12),
+                _buildStatsBadges(weeklyCount, avgRating),
                 const SizedBox(height: 16),
                 _buildLogTrainingButton(context),
                 const SizedBox(height: 10),
@@ -100,6 +104,68 @@ class DashboardScreen extends StatelessWidget {
         Text('Ready to crush your goals today?',
             style: GoogleFonts.inter(
                 fontSize: 13, color: AppColors.onSurfaceVariant)),
+      ],
+    );
+  }
+
+  Widget _buildStatsBadges(int weeklyCount, double avgRating) {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppColors.primaryContainer.withAlpha(200),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              children: [
+                Text('This Week',
+                    style: GoogleFonts.inter(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white70)),
+                const SizedBox(height: 2),
+                Text(weeklyCount.toString(),
+                    style: GoogleFonts.lexend(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white)),
+                Text('sessions',
+                    style: GoogleFonts.inter(
+                        fontSize: 10, color: Colors.white60)),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppColors.secondaryContainer.withAlpha(200),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              children: [
+                Text('Avg Rating',
+                    style: GoogleFonts.inter(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white70)),
+                const SizedBox(height: 2),
+                Text(avgRating.toString(),
+                    style: GoogleFonts.lexend(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white)),
+                Text('/10',
+                    style: GoogleFonts.inter(
+                        fontSize: 10, color: Colors.white60)),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

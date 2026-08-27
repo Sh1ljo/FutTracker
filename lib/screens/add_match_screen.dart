@@ -26,6 +26,7 @@ class _AddMatchScreenState extends State<AddMatchScreen> {
   late final TextEditingController _minutesCtrl;
   late final TextEditingController _ratingCtrl;
   late final TextEditingController _notesCtrl;
+  late String _matchType;
   bool _saving = false;
 
   @override
@@ -44,6 +45,7 @@ class _AddMatchScreenState extends State<AddMatchScreen> {
     _minutesCtrl = TextEditingController(text: '${e?.minutesPlayed ?? 90}');
     _ratingCtrl = TextEditingController(text: '${e?.rating ?? 5}');
     _notesCtrl = TextEditingController(text: e?.notes ?? '');
+    _matchType = e?.matchType ?? 'normal';
   }
 
   @override
@@ -84,6 +86,7 @@ class _AddMatchScreenState extends State<AddMatchScreen> {
       rating: int.tryParse(_ratingCtrl.text) ?? 5,
       notes: _notesCtrl.text.trim().isEmpty ? null : _notesCtrl.text.trim(),
       createdAt: widget.existing?.createdAt ?? DateTime.now().toIso8601String(),
+      matchType: _matchType,
     );
     if (widget.existing != null) {
       await context.read<AppProvider>().updateMatch(match);
@@ -111,6 +114,86 @@ class _AddMatchScreenState extends State<AddMatchScreen> {
       ),
     );
     if (picked != null) setState(() => _selectedDate = picked);
+  }
+
+  Widget _buildMatchTypeSelector() {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.surfaceContainerHigh,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      padding: const EdgeInsets.all(4),
+      child: Row(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () => setState(() => _matchType = 'normal'),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: _matchType == 'normal'
+                      ? AppColors.primaryContainer
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.shield,
+                        size: 18,
+                        color: _matchType == 'normal'
+                            ? Colors.white
+                            : AppColors.onSurfaceVariant),
+                    const SizedBox(width: 8),
+                    Text('Normal Match',
+                        style: GoogleFonts.inter(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: _matchType == 'normal'
+                                ? Colors.white
+                                : AppColors.onSurfaceVariant)),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () => setState(() => _matchType = 'five_a_side'),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: _matchType == 'five_a_side'
+                      ? AppColors.primaryContainer
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.people_outline,
+                        size: 18,
+                        color: _matchType == 'five_a_side'
+                            ? Colors.white
+                            : AppColors.onSurfaceVariant),
+                    const SizedBox(width: 8),
+                    Text('5-a-Side',
+                        style: GoogleFonts.inter(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: _matchType == 'five_a_side'
+                                ? Colors.white
+                                : AppColors.onSurfaceVariant)),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -155,6 +238,8 @@ class _AddMatchScreenState extends State<AddMatchScreen> {
                       : 'Record your game stats.',
                   style: GoogleFonts.inter(
                       fontSize: 15, color: AppColors.onSurfaceVariant)),
+              const SizedBox(height: 24),
+              _buildMatchTypeSelector(),
               const SizedBox(height: 24),
               _section('Game Info', [
                 Row(children: [

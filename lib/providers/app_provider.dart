@@ -11,6 +11,7 @@ class AppProvider extends ChangeNotifier {
   Map<String, String> _profile = {};
   bool _isLoading = false;
   int _trainingStreak = 0;
+  int? _lastMilestoneStreak;
 
   List<TrainingSession> get sessions => _sessions;
   List<Match> get matches => _matches;
@@ -19,6 +20,7 @@ class AppProvider extends ChangeNotifier {
   int get trainingStreak => _trainingStreak;
   Map<String, String> get profile => _profile;
   bool get isLoading => _isLoading;
+  int? get lastMilestoneStreak => _lastMilestoneStreak;
 
   void _calculateTrainingStreak() {
     if (_sessions.isEmpty) {
@@ -143,5 +145,55 @@ class AppProvider extends ChangeNotifier {
     }
     await _loadProfile();
     notifyListeners();
+  }
+
+  Map<String, int> getHeatMapData({int days = 90}) {
+    final now = DateTime.now();
+    final sessionDates = _sessions.map((s) => s.date).toSet();
+    final heatMap = <String, int>{};
+
+    for (int i = days - 1; i >= 0; i--) {
+      final date = now.subtract(Duration(days: i));
+      final key = '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+      heatMap[key] = sessionDates.contains(key) ? 1 : 0;
+    }
+    return heatMap;
+  }
+
+  String? getMilestoneMessage() {
+    const milestones = [7, 14, 30, 60, 90];
+    if (_lastMilestoneStreak == null && milestones.contains(_trainingStreak)) {
+      _lastMilestoneStreak = _trainingStreak;
+      return _buildMilestoneMessage(_trainingStreak);
+    }
+    if (_trainingStreak > (_lastMilestoneStreak ?? 0) && milestones.contains(_trainingStreak)) {
+      _lastMilestoneStreak = _trainingStreak;
+      return _buildMilestoneMessage(_trainingStreak);
+    }
+    return null;
+  }
+
+  String _buildMilestoneMessage(int streak) {
+    if (streak == 7) return '🔥 Week Strong! 7-day streak!';
+    if (streak == 14) return '⚡ Two Weeks! You\'re on fire!';
+    if (streak == 30) return '🏆 One Month Consistency! Amazing!';
+    if (streak == 60) return '👑 Two Months! You\'re unstoppable!';
+    if (streak == 90) return '🌟 Three Months! Legendary streak!';
+    return '';
+  }
+
+  int getWeeklyTrainingSessions() {
+    final now = DateTime.now();
+    final weekAgo = now.subtract(const Duration(days: 7));
+    return _sessions.where((s) {
+      final sessionDate = DateTime.parse(s.date);
+      return sessionDate.isAfter(weekAgo) && sessionDate.isBefore(now.add(const Duration(days: 1)));
+    }).length;
+  }
+
+  double getAverageMatchRating() {
+    if (_matches.isEmpty) return 0.0;
+    final totalRating = _matches.fold<double>(0, (sum, m) => sum + m.rating);
+    return (totalRating / _matches.length * 10).round() / 10;
   }
 }
